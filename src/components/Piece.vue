@@ -21,10 +21,18 @@
 
 	onMounted(() => {
 		let dragStartHandler = (event) => {
-			console.log(event);
+			//event.preventDefault()
+			event.dataTransfer.dropEffect = "move"
+			event.dataTransfer.setData("text/plain", event.target.id)
+		}
+		let pieceDropHandler = (event) => {
+			event.preventDefault()
+			console.log("wtf")
 		}
 
-		document.getElementById(`${owner.value + pieceTypeMap.get(pieceValue.value)}`).addEventListener("dragstart", dragStartHandler)
+		let el = document.getElementById(`${owner.value + pieceTypeMap.get(pieceValue.value)}`)
+		el.addEventListener("dragstart", dragStartHandler)
+		el.addEventListener("drop", pieceDropHandler)
 	})
 
 </script>

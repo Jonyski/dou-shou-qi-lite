@@ -1,5 +1,35 @@
 <script setup>
 	import Piece from './Piece.vue'
+	import { onMounted } from 'vue'
+
+	onMounted(() => {
+		let dragOverHandler = (event) => {
+			event.preventDefault()
+		}
+
+		let onDropHandler = (event) => {
+			// let dragStartHandler = (event) => {
+			// 	//event.preventDefault()
+			// 	event.dataTransfer.dropEffect = "move"
+			// 	event.dataTransfer.setData("text/plain", event.target.id)
+			// }
+			//TODO: refactor this function
+			event.preventDefault()
+			let draggedPieceId = event.dataTransfer.getData("text/plain")
+			let draggedPiece = document.getElementById(draggedPieceId)
+
+			document.getElementById(draggedPieceId).parentElement.innerHTML = ""
+			event.target.appendChild(draggedPiece)
+			//document.getElementById(draggedPieceId).addEventListener("dragstart", dragStartHandler)
+
+
+		}
+
+		document.querySelectorAll(".square").forEach(element => {
+			element.addEventListener("dragover", dragOverHandler)
+			element.addEventListener("drop", onDropHandler)
+		})
+	})
 </script>
 
 <template>
