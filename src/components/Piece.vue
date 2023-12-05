@@ -1,12 +1,36 @@
 <script setup>
-	defineProps({
+	import { ref, onMounted, toRefs } from 'vue'
+
+	const props = defineProps({
 		pieceValue: Number,
-		imgSource: String
+		imgSource: String,
+		owner: String
 	})
+
+	const { owner, pieceValue } = toRefs(props)
+
+	const pieceTypeMap = new Map([
+		[1, "rat"],
+		[2, "cat"],
+		[3, "pig"],
+		[4, "bear"],
+		[5, "monkey"],
+		[6, "tiger"],
+		[7, "lion"],
+		[8, "elephant"]])
+
+	onMounted(() => {
+		let dragStartHandler = (event) => {
+			console.log(event);
+		}
+
+		document.getElementById(`${owner.value + pieceTypeMap.get(pieceValue.value)}`).addEventListener("dragstart", dragStartHandler)
+	})
+
 </script>
 
 <template>
-	<div class="piece-div" :data-pieceValue="pieceValue">
+	<div :id="owner + pieceTypeMap.get(pieceValue)" class="piece-div" :data-pieceValue="pieceValue" draggable="true">
 		<img class="piece-img" :src="imgSource" draggable="false">
 	</div>
 </template>
@@ -24,5 +48,6 @@
 		width: 100%;
 		height: 100%;
 		border-radius: 50%;
+		opacity: 1;
 	}
 </style>
