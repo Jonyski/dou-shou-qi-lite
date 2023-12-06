@@ -8,11 +8,6 @@
 		}
 
 		let onDropHandler = (event) => {
-			// let dragStartHandler = (event) => {
-			// 	//event.preventDefault()
-			// 	event.dataTransfer.dropEffect = "move"
-			// 	event.dataTransfer.setData("text/plain", event.target.id)
-			// }
 			//TODO: refactor this function
 			event.preventDefault()
 			let draggedPieceId = event.dataTransfer.getData("text/plain")
@@ -20,9 +15,6 @@
 
 			document.getElementById(draggedPieceId).parentElement.innerHTML = ""
 			event.target.appendChild(draggedPiece)
-			//document.getElementById(draggedPieceId).addEventListener("dragstart", dragStartHandler)
-
-
 		}
 
 		document.querySelectorAll(".square").forEach(element => {
