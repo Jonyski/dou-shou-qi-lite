@@ -25,14 +25,14 @@
 			event.dataTransfer.dropEffect = "move"
 			event.dataTransfer.setData("text/plain", event.target.id)
 		}
-		let pieceDropHandler = (event) => {
-			event.preventDefault()
-			console.log("wtf")
-		}
+		// let pieceDropHandler = (event) => {
+		// 	event.preventDefault()
+		// 	console.log("wtf")
+		// }
 
 		let el = document.getElementById(`${owner.value + pieceTypeMap.get(pieceValue.value)}`)
 		el.addEventListener("dragstart", dragStartHandler)
-		el.addEventListener("drop", pieceDropHandler)
+		// el.addEventListener("drop", pieceDropHandler)
 	})
 
 </script>

@@ -1,8 +1,12 @@
 <script setup>
 	import Piece from './Piece.vue'
 	import { onMounted } from 'vue'
+	import GameController from '../game-logic/game-controller.js'
+	import { Movement } from '../game-logic/movement.js'
 
 	onMounted(() => {
+		const GAME_CONTROLER = new GameController()
+
 		let dragOverHandler = (event) => {
 			event.preventDefault()
 		}
@@ -12,9 +16,9 @@
 			event.preventDefault()
 			let draggedPieceId = event.dataTransfer.getData("text/plain")
 			let draggedPiece = document.getElementById(draggedPieceId)
+			let targetSquare = event.target
 
-			document.getElementById(draggedPieceId).parentElement.innerHTML = ""
-			event.target.appendChild(draggedPiece)
+			GAME_CONTROLER.tryAndMove(new Movement(draggedPiece, targetSquare))
 		}
 
 		document.querySelectorAll(".square").forEach(element => {
