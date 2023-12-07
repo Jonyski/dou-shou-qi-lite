@@ -57,5 +57,6 @@
 		height: 100%;
 		border-radius: 50%;
 		opacity: 1;
+		box-shadow: 0px 10px 10px rgba(51, 22, 8, 0.5);
 	}
 </style>
