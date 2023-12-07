@@ -7,15 +7,28 @@
 body{
   width: 100%;
   margin: 0px;
-    display: flex;
+  display: flex;
   flex-direction: row;
   align-items: center;
 }
 #app{
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100vw;
+  height: 100vh;
+  margin: 0px;
+  padding: 0px;
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.cemetery img{
+  aspect-ratio: 1/1;
+  height: 7vh !important;
+  width: 7vh !important;
+  padding-bottom: 1vh;
+  padding-top: 1vh;
+  border-radius: 50%;
 }
 
 @media (prefers-color-scheme: light) {
