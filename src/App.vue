@@ -1,9 +1,12 @@
 <script setup>
-import GameBoard from './components/GameBoard.vue'
+  import GameBoard from './components/GameBoard.vue'
+  import Cemetery from './components/Cemetery.vue'
 </script>
 
 <template>
+  <Cemetery :playerNumber="2"/>
   <GameBoard />
+  <Cemetery :playerNumber="1"/>
 </template>
 
 <style scoped>

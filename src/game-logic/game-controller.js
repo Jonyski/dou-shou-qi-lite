@@ -1,11 +1,13 @@
 import Player from './player.js'
-import { Movement, MoveAnalyzer } from './movement.js'
+import { Movement, MoveAnalyzer, MoveMaker } from './movement.js'
 
 class GameController {
 	constructor() {
 		this.player1 = new Player(1)
 		this.player2 = new Player(2)
 		this.moveAnalyzer = new MoveAnalyzer()
+		this.moveMaker = new MoveMaker()
+		this.round = 1
 	}
 
 	getBoardState(){
@@ -20,19 +22,19 @@ class GameController {
 			}
 			i++
 		}
-		console.log("BOARD STATE:")
-		console.log(boardState)
 		return boardState
 	}
 
-	isValidMove(move) {
-		return this.moveAnalyzer.analyze(move, this.getBoardState())
-	}
-
 	tryAndMove(move) {
-		if(this.isValidMove(move)){
-			move.movingPiece.parentElement.innerHTML = ""
-			move.targetSquare.appendChild(move.movingPiece)
+		let analyzedMove = this.moveAnalyzer.analyze(move, this.getBoardState())
+		if(analyzedMove.isValid){
+			if(analyzedMove.moveType == "normal"){
+				this.moveMaker.makeMove(move)
+			} else if(analyzedMove.moveType == "piece eating"){
+				this.moveMaker.eatPiece(move)
+			}
+			console.log("round: " + this.round)
+			this.round++
 		}
 		else{
 			return false

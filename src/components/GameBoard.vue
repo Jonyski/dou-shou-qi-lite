@@ -17,8 +17,9 @@
 			let draggedPieceId = event.dataTransfer.getData("text/plain")
 			let draggedPiece = document.getElementById(draggedPieceId)
 			let targetSquare = event.target
+			let playerMoving = GAME_CONTROLER.round % 2 == 0 ? "P2" : "P1"
 
-			GAME_CONTROLER.tryAndMove(new Movement(draggedPiece, targetSquare))
+			GAME_CONTROLER.tryAndMove(new Movement(draggedPiece, targetSquare, playerMoving))
 		}
 
 		document.querySelectorAll(".square").forEach(element => {
