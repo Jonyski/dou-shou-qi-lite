@@ -1,8 +1,10 @@
 import Player from './player.js'
 import { Movement, MoveAnalyzer, MoveMaker } from './movement.js'
+import { h, render } from 'vue'
+import EndGame from '../components/EndGame.vue'
 
 class GameController {
-	constructor() {
+	constructor(){
 		this.player1 = new Player(1)
 		this.player2 = new Player(2)
 		this.moveAnalyzer = new MoveAnalyzer()
@@ -25,13 +27,16 @@ class GameController {
 		return boardState
 	}
 
-	tryAndMove(move) {
+	tryAndMove(move){
 		let analyzedMove = this.moveAnalyzer.analyze(move, this.getBoardState())
 		if(analyzedMove.isValid){
 			if(analyzedMove.moveType == "normal"){
 				this.moveMaker.makeMove(move)
 			} else if(analyzedMove.moveType == "piece eating"){
 				this.moveMaker.eatPiece(move)
+			} else if(analyzedMove.moveType == "game winning"){
+				this.moveMaker.makeMove(move)
+				this.endGame()
 			}
 			console.log("round: " + this.round)
 			this.round++
@@ -39,6 +44,16 @@ class GameController {
 		else{
 			return false
 		}
+	}
+
+	endGame(){
+		console.log("GAME END")
+		const endGameEl = h(EndGame, {
+			winner: this.round % 2 == 0 ? "P2" : "P1"
+		})
+		render(endGameEl, document.getElementById("board"))
+
+		console.log(endGameEl)
 	}
 }
 

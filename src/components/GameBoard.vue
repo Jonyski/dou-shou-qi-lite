@@ -1,25 +1,25 @@
 <script setup>
 	import Piece from './Piece.vue'
-	import { onMounted } from 'vue'
+	import { onMounted, getCurrentInstance } from 'vue'
 	import GameController from '../game-logic/game-controller.js'
 	import { Movement } from '../game-logic/movement.js'
+	const GAME_CONTROLLER = getCurrentInstance().appContext.config.globalProperties.$GAME_CONTROLLER
 
-	onMounted(() => {
-		const GAME_CONTROLER = new GameController()
+	onMounted(function(){
+		GAME_CONTROLLER.value = new GameController()
 
-		let dragOverHandler = (event) => {
+		let dragOverHandler = function(event){
 			event.preventDefault()
 		}
 
-		let onDropHandler = (event) => {
-			//TODO: refactor this function
+		let onDropHandler = function(event){
 			event.preventDefault()
 			let draggedPieceId = event.dataTransfer.getData("text/plain")
 			let draggedPiece = document.getElementById(draggedPieceId)
 			let targetSquare = event.target
-			let playerMoving = GAME_CONTROLER.round % 2 == 0 ? "P2" : "P1"
+			let playerMoving = GAME_CONTROLLER.value.round % 2 == 0 ? "P2" : "P1"
 
-			GAME_CONTROLER.tryAndMove(new Movement(draggedPiece, targetSquare, playerMoving))
+			GAME_CONTROLLER.value.tryAndMove(new Movement(draggedPiece, targetSquare, playerMoving))
 		}
 
 		document.querySelectorAll(".square").forEach(element => {
@@ -46,7 +46,7 @@
 			</div>
 
 			<!-- den is the square in witch the opponent has to get to in order to win -->
-			<div class="square den" data-square-type="player2-den">
+			<div class="square den" data-square-type="P2-den">
 				
 			</div>
 
@@ -286,7 +286,7 @@
 				
 			</div>
 
-			<div class="square den" data-square-type="player1-den">
+			<div class="square den" data-square-type="P1-den">
 				
 			</div>
 

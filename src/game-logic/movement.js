@@ -24,23 +24,11 @@ export class MoveAnalyzer {
 		let pieceType = pieceTypeMap.get(parseInt(move.movingPiece.dataset.piecevalue))
 		let startingCoords = this.getMoveCoords(move.movingPiece.parentElement, boardState)
 
-		//some pieces have special movements, so I find it best to abstract
-		//those specific cases to other function
-		// if(pieceType == "lion"){
-		// 	this.analyzeLionMove(move, startingCoords, boardState)
-
-		// } else if(pieceType == "tiger"){
-		// 	this.analyzeTigerMove(move, startingCoords, boardState)
-
-		// } else if(pieceType == "rat"){
-		// 	this.analyzeRatMove(move, startingCoords, boardState)
-
-		// } else { //all other pieces move equally
-
-		if(!this.isValidMove(move, this.getAllowedSquares(pieceType, startingCoords, boardState))){
-			console.log("MOVE NOT ALLOWED")
+		if(!this.isValidMove(move, this.getAllowedSquares(pieceType, startingCoords, boardState, move.playerMoving))){
 			return {isValid: false, moveType: null}
-		} else{		
+		} else{
+
+			//checking if its a eating move
 			if(move.targetSquare.innerHTML != ""){
 				if(this.canEatPiece(move)){
 					return {isValid: true, moveType: "piece eating"}
@@ -49,23 +37,16 @@ export class MoveAnalyzer {
 				}
 			}
 
+			// checking if its a winning move
+			if(move.targetSquare.dataset.squareType.endsWith("den") && !move.targetSquare.dataset.squareType.startsWith(move.playerMoving)){
+				return {isValid: true, moveType: "game winning"}
+			}
+
 			return {isValid: true, moveType: "normal"}
 		}
 
-		//checking if its possible to eat
-
 		return {isValid: false, moveType: null}
-		//}
 	}
-
-	// analyzeLionMove(move, startingCoords, boardState) {
-	// }
-
-	// analyzeTigerMove(move, startingCoords, boardState) {
-	// }
-
-	// analyzeRatMove(move, startingCoords, boardState) {
-	//}
 
 	getMoveCoords(startingSquare, boardState){
 		for(let i = 0; i <= 8; i++){
@@ -77,7 +58,7 @@ export class MoveAnalyzer {
 		}
 	}
 
-	getAllowedSquares(pieceType, startingCoords, boardState){
+	getAllowedSquares(pieceType, startingCoords, boardState, playerMoving){
 		console.log("GETTING ALLOWED SQUARES")
 		let row = startingCoords.row
 		let column = startingCoords.column
@@ -101,31 +82,43 @@ export class MoveAnalyzer {
 			squareAtRight = boardState[row][Math.abs(column + 1)]
 		}
 
+		if(this.isHisOwnDen(squareAbove, playerMoving)){
+			squareAbove = `the square above is your den ${playerMoving}`
+		}
+		if(this.isHisOwnDen(squareBelow, playerMoving)){
+			squareBelow = `the square below is your den ${playerMoving}`
+		}
+		if(this.isHisOwnDen(squareAtLeft, playerMoving)){
+			squareAtLeft = `the square to the left is your den ${playerMoving}`
+		}
+		if(this.isHisOwnDen(squareAtRight, playerMoving)){
+			squareAtRight = `the square to the right is your den ${playerMoving}`
+		}
+
 		if(pieceType == "lion"){
 			try{
-				if(squareAbove.dataset.squareType == "river"){
+				if(this.isRiver(squareAbove)){
 					if(!this.isRatBlocking(boardState, startingCoords, {direction: "vertical", path: [-1, -2, -3]})){
 						squareAbove = boardState[row - 4][column]
 					}
 				}
 			} catch(e) {}
 			try{
-				if(squareBelow.dataset.squareType == "river"){
+				if(this.isRiver(squareBelow)){
 					if(!this.isRatBlocking(boardState, startingCoords, {direction: "vertical", path: [1, 2, 3]})){
 						squareBelow = boardState[row + 4][column]
 					}
 				}
 			} catch(e) {}
 			try{
-				if(squareAtLeft.dataset.squareType == "river"){
+				if(this.isRiver(squareAtLeft)){
 					if(!this.isRatBlocking(boardState, startingCoords, {direction: "horizontal", path: [-1, -2]})){
 						squareAtLeft = boardState[row][column - 3]
 					}
 				}
 			} catch(e) {}
 			try{
-				if(squareAtRight.dataset.squareType == "river"){
-					console.log("RIGHT SQUARE IS A RIVER")
+				if(this.isRiver(squareAtRight)){
 					if(!this.isRatBlocking(boardState, startingCoords, {direction: "horizontal", path: [1, 2]})){
 						squareAtRight = boardState[row][column + 3]
 					}
@@ -133,22 +126,22 @@ export class MoveAnalyzer {
 			} catch(e){}
 		} else if(pieceType == "tiger"){
 			try{
-				if(squareAbove.dataset.squareType == "river"){
+				if(this.isRiver(squareAbove)){
 					squareAbove = "there is no square above :v"
 				}
 			} catch(e){}
 			try{
-				if(squareBelow.dataset.squareType == "river"){
+				if(this.isRiver(squareBelow)){
 					squareBelow = "there is no square below :3"
 				}
 			} catch(e){}
 			try{
-				if(squareAtLeft.dataset.squareType == "river"){
+				if(this.isRiver(squareAtLeft)){
 					squareAtLeft = boardState[row][column - 3]
 				}
 			} catch(e){}
 			try{
-				if(squareAtRight.dataset.squareType == "river"){
+				if(this.isRiver(squareAtRight)){
 					squareAtRight = boardState[row][column + 3]
 				}
 			} catch(e){}
@@ -156,16 +149,16 @@ export class MoveAnalyzer {
 			//rat can move anywhere
 		} else {
 			try{
-				if(squareAbove.dataset.squareType == "river"){
+				if(this.isRiver(squareAbove)){
 					squareAbove = "there is no square above :v"
 				}
-				if(squareBelow.dataset.squareType == "river"){
+				if(this.isRiver(squareBelow)){
 					squareBelow = "there is no square below :3"
 				}
-				if(squareAtLeft.dataset.squareType == "river"){
+				if(this.isRiver(squareAtLeft)){
 					squareAtLeft = "there is no square to the left :o"
 				}
-				if(squareAtRight.dataset.squareType == "river"){
+				if(this.isRiver(squareAtRight)){
 					squareAtRight = "there is no square to the right :("
 				}
 			} catch(e){}
@@ -216,16 +209,29 @@ export class MoveAnalyzer {
 	}
 
 	canEatPiece(move){
-		if(parseInt(move.targetSquare.children[0].dataset.piecevalue) <= parseInt(move.movingPiece.dataset.piecevalue)){
+		let eatenValue = parseInt(move.targetSquare.children[0].dataset.piecevalue)
+		let eaterValue = parseInt(move.movingPiece.dataset.piecevalue)
+		//normal eating OR rat eating elephant OR eating in a trap square
+		if(eatenValue <= eaterValue || (eatenValue == 8 && eaterValue == 1) || move.targetSquare.dataset.squareType == "trap"){
 			if(!move.targetSquare.children[0].id.startsWith(move.playerMoving)){
-				//return {isValid: true, moveType: "piece eating"}
 				return true
 			} else {
-				//return {isValid: false, moveType: null}
 				return false
 			}
 		}
 		return false
+	}
+
+	isRiver(square){
+		return square.dataset.squareType == "river"
+	}
+
+	isHisOwnDen(square, player){
+		try{
+			return square.dataset.squareType.endsWith("den") && square.dataset.squareType.startsWith(player)
+		} catch(e) {
+			return false
+		}
 	}
 }
 
