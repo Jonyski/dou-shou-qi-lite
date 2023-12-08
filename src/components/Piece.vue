@@ -1,5 +1,6 @@
 <script setup>
-	import { ref, onMounted, toRefs } from 'vue'
+	import { ref, onMounted, toRefs, getCurrentInstance } from 'vue'
+	import { Movement } from '../game-logic/movement.js'
 
 	const props = defineProps({
 		pieceValue: Number,
@@ -8,6 +9,7 @@
 	})
 
 	const { owner, pieceValue } = toRefs(props)
+	const GAME_CONTROLLER = getCurrentInstance().appContext.config.globalProperties.$GAME_CONTROLLER
 
 	const pieceTypeMap = new Map([
 		[1, "rat"],
@@ -19,20 +21,31 @@
 		[7, "lion"],
 		[8, "elephant"]])
 
-	onMounted(() => {
-		let dragStartHandler = (event) => {
+	onMounted(function(){
+		let dragStartHandler = function(event){
 			//event.preventDefault()
 			event.dataTransfer.dropEffect = "move"
 			event.dataTransfer.setData("text/plain", event.target.id)
 		}
-		// let pieceDropHandler = (event) => {
-		// 	event.preventDefault()
-		// 	console.log("wtf")
-		// }
+
+		let pieceDragOverHandler = function(event){
+			event.preventDefault()
+		}
+
+		let pieceDropHandler = function(event){
+			event.preventDefault()
+			let draggedPieceId = event.dataTransfer.getData("text/plain")
+			let draggedPiece = document.getElementById(draggedPieceId)
+			let targetSquare = event.target.parentElement.parentElement
+			let playerMoving = GAME_CONTROLLER.value.round % 2 == 0 ? "P2" : "P1"
+
+			GAME_CONTROLLER.value.tryAndMove(new Movement(draggedPiece, targetSquare, playerMoving))
+		}
 
 		let el = document.getElementById(`${owner.value + pieceTypeMap.get(pieceValue.value)}`)
 		el.addEventListener("dragstart", dragStartHandler)
-		// el.addEventListener("drop", pieceDropHandler)
+		el.addEventListener("drop", pieceDropHandler)
+		el.addEventListener("dragover", pieceDragOverHandler)
 	})
 
 </script>
