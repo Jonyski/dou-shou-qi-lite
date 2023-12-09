@@ -1,10 +1,3 @@
-<!-- <script>
-	import { defineComponent } from 'vue'
-	export default defineComponent({
-		name: 'EndGame',
-	})
-</script> -->
-
 <script setup>
 	import { computed } from 'vue'
 
@@ -13,9 +6,6 @@
 		})
 
 	const winnerName = props.winner == "P1" ? 'Player 1' : 'Player 2'
-	// const winnerName = computed(() => {
-	//   return winner == "P1" ? 'Player 1' : 'Player 2'
-	// })
 </script>
 
 <template>
@@ -31,8 +21,7 @@
 		left: 0vw;
 		height: 60vh;
 		width: 100vw;
-		/*border-top: 10px solid white;
-		border-bottom: 10px solid white;*/
+
 		background-color: rgba(0, 0, 0, 0.5);
 		background-image: url("./firework.gif");
 		background-repeat: no-repeat;
