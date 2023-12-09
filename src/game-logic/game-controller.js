@@ -10,6 +10,7 @@ class GameController {
 		this.moveAnalyzer = new MoveAnalyzer()
 		this.moveMaker = new MoveMaker()
 		this.round = 1
+		this.isGameOver = false
 	}
 
 	getBoardState(){
@@ -28,6 +29,10 @@ class GameController {
 	}
 
 	tryAndMove(move){
+		if(this.isGameOver){
+			return false
+		}
+
 		let analyzedMove = this.moveAnalyzer.analyze(move, this.getBoardState())
 		if(analyzedMove.isValid){
 			if(analyzedMove.moveType == "normal"){
@@ -48,11 +53,11 @@ class GameController {
 
 	endGame(){
 		console.log("GAME END")
+		this.isGameOver = true
 		const endGameEl = h(EndGame, {
 			winner: this.round % 2 == 0 ? "P2" : "P1"
 		})
 		render(endGameEl, document.getElementById("board"))
-
 		console.log(endGameEl)
 	}
 }
