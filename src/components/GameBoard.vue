@@ -3,9 +3,11 @@
 	import { onMounted, getCurrentInstance } from 'vue'
 	import GameController from '../game-logic/game-controller.js'
 	import { Movement } from '../game-logic/movement.js'
-	const GAME_CONTROLLER = getCurrentInstance().appContext.config.globalProperties.$GAME_CONTROLLER
+	// const GAME_CONTROLLER = getCurrentInstance().appContext.config.globalProperties.$GAME_CONTROLLER
 
 	onMounted(function(){
+		debugger;
+		const GAME_CONTROLLER = getCurrentInstance().appContext.config.globalProperties.$GAME_CONTROLLER
 		GAME_CONTROLLER.value = new GameController()
 
 		let dragOverHandler = function(event){
@@ -33,7 +35,7 @@
 	<section id="board">
 		<div class="row">
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P2" :piece-value="7" img-source="./lion.jpg"/>
+				<Piece owner="P2" :piece-value="7" img-source="./lion.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -59,7 +61,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P2" :piece-value="6" img-source="./tiger.jpg"/>
+				<Piece owner="P2" :piece-value="6" img-source="./tiger.png"/>
 			</div>
 		</div>
 
@@ -69,7 +71,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P2" :piece-value="3" img-source="./pig.jpg"/>
+				<Piece owner="P2" :piece-value="3" img-source="./pig.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -85,7 +87,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P2" :piece-value="2" img-source="./cat.jpg"/>
+				<Piece owner="P2" :piece-value="2" img-source="./cat.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -95,7 +97,7 @@
 
 		<div class="row">
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P2" :piece-value="1" img-source="./rat.jpg"/>
+				<Piece owner="P2" :piece-value="1" img-source="./rat.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -103,7 +105,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P2" :piece-value="5" img-source="./monkey.jpg"/>
+				<Piece owner="P2" :piece-value="5" img-source="./monkey.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -111,7 +113,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P2" :piece-value="4" img-source="./bear.jpg"/>
+				<Piece owner="P2" :piece-value="4" img-source="./bear.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -119,37 +121,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P2" :piece-value="8" img-source="./elephant.jpg"/>
-			</div>
-		</div>
-
-		<div class="row">
-			<div class="square normal" data-square-type="normal">
-				
-			</div>
-
-			<div class="square river" data-square-type="river">
-				
-			</div>
-
-			<div class="square river" data-square-type="river">
-				
-			</div>
-
-			<div class="square normal" data-square-type="normal">
-				
-			</div>
-
-			<div class="square river" data-square-type="river">
-				
-			</div>
-
-			<div class="square river" data-square-type="river">
-				
-			</div>
-
-			<div class="square normal" data-square-type="normal">
-				
+				<Piece owner="P2" :piece-value="8" img-source="./elephant.png"/>
 			</div>
 		</div>
 
@@ -215,7 +187,37 @@
 
 		<div class="row">
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P1" :piece-value="8" img-source="./elephant.jpg"/>
+				
+			</div>
+
+			<div class="square river" data-square-type="river">
+				
+			</div>
+
+			<div class="square river" data-square-type="river">
+				
+			</div>
+
+			<div class="square normal" data-square-type="normal">
+				
+			</div>
+
+			<div class="square river" data-square-type="river">
+				
+			</div>
+
+			<div class="square river" data-square-type="river">
+				
+			</div>
+
+			<div class="square normal" data-square-type="normal">
+				
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="square normal" data-square-type="normal">
+				<Piece owner="P1" :piece-value="8" img-source="./elephant.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -223,7 +225,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P1" :piece-value="4" img-source="./bear.jpg"/>
+				<Piece owner="P1" :piece-value="4" img-source="./bear.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -231,7 +233,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P1" :piece-value="5" img-source="./monkey.jpg"/>
+				<Piece owner="P1" :piece-value="5" img-source="./monkey.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -239,7 +241,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P1" :piece-value="1" img-source="./rat.jpg"/>
+				<Piece owner="P1" :piece-value="1" img-source="./rat.png"/>
 			</div>
 		</div>
 
@@ -249,7 +251,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P1" :piece-value="2" img-source="./cat.jpg"/>
+				<Piece owner="P1" :piece-value="2" img-source="./cat.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -265,7 +267,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P1" :piece-value="3" img-source="./pig.jpg"/>
+				<Piece owner="P1" :piece-value="3" img-source="./pig.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -275,7 +277,7 @@
 
 		<div class="row">
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P1" :piece-value="6" img-source="./tiger.jpg"/>
+				<Piece owner="P1" :piece-value="6" img-source="./tiger.png"/>
 			</div>
 
 			<div class="square normal" data-square-type="normal">
@@ -299,7 +301,7 @@
 			</div>
 
 			<div class="square normal" data-square-type="normal">
-				<Piece owner="P1" :piece-value="7" img-source="./lion.jpg"/>
+				<Piece owner="P1" :piece-value="7" img-source="./lion.png"/>
 			</div>
 		</div>
 	</section>

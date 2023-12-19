@@ -59,7 +59,6 @@ export class MoveAnalyzer {
 	}
 
 	getAllowedSquares(pieceType, startingCoords, boardState, playerMoving){
-		console.log("GETTING ALLOWED SQUARES")
 		let row = startingCoords.row
 		let column = startingCoords.column
 
@@ -168,7 +167,6 @@ export class MoveAnalyzer {
 		allowedSquares.push(squareBelow)
 		allowedSquares.push(squareAtLeft)
 		allowedSquares.push(squareAtRight)
-		console.log(allowedSquares)
 		return allowedSquares
 	}
 
@@ -189,7 +187,6 @@ export class MoveAnalyzer {
 	}
 
 	isRatBlocking(boardState, startingCoords, jumpMove){
-		console.log("CHECKING RIVER FOR RAT")
 		if(jumpMove.direction == "vertical"){
 			for(let rowOffset of jumpMove.path){
 				if(boardState[startingCoords.row + rowOffset][startingCoords.column].innerHTML != ""){
@@ -198,7 +195,6 @@ export class MoveAnalyzer {
 			}
 			return false
 		} else {
-			console.log("HORIZONTAL JUMP")
 			for(let columnOffset of jumpMove.path){
 				if(boardState[startingCoords.row][startingCoords.column + columnOffset].innerHTML != ""){
 					return true
