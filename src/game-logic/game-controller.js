@@ -11,6 +11,7 @@ class GameController {
 		this.moveMaker = new MoveMaker()
 		this.round = 1
 		this.isGameOver = false
+		this.movementAudio = new Audio("../../public/piece-sound.mp3")
 	}
 
 	getBoardState(){
@@ -43,6 +44,7 @@ class GameController {
 				this.moveMaker.makeMove(move)
 				this.endGame()
 			}
+			this.movementAudio.play()
 			console.log("round: " + this.round)
 			document.querySelector(".selected").classList.remove("selected")
 			this.round++

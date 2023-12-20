@@ -38,6 +38,16 @@
 			element.addEventListener("drop", onDropHandler)
 			element.addEventListener("click", clickHandler)
 		})
+
+		let musicalElement = document.createElement("audio")
+		musicalElement.setAttribute("src", "../../public/background-music.mp3")
+		musicalElement.setAttribute("autoplay", "autoplay")
+		musicalElement.setAttribute("loop", true)
+
+		musicalElement.addEventListener('ended', function() {
+		    this.currentTime = 0;
+		    this.play();
+		});
 	})
 </script>
 
