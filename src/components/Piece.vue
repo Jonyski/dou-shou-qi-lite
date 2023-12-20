@@ -45,9 +45,9 @@
 
 		// i'm really sorry, this function is a mess (;-;)
 		let pieceClickHandler = function(event){
+			event.stopPropagation()
 			let playerMoving = GAME_CONTROLLER.value.round % 2 == 0 ? "P2" : "P1"
 			if(event.target.parentElement.id.startsWith(playerMoving)){
-				console.log("PIECE SELECTED")
 				let selectedEl;
 				try{
 					selectedEl = document.querySelector(".selected")
@@ -67,7 +67,9 @@
 				let targetSquare = event.target.parentElement.parentElement
 				let playerMoving = GAME_CONTROLLER.value.round % 2 == 0 ? "P2" : "P1"
 
-				GAME_CONTROLLER.value.tryAndMove(new Movement(selectedPiece, targetSquare, playerMoving))
+				if(selectedPiece){
+					GAME_CONTROLLER.value.tryAndMove(new Movement(selectedPiece, targetSquare, playerMoving))
+				}
 			}
 		}
 

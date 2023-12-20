@@ -44,6 +44,7 @@ class GameController {
 				this.endGame()
 			}
 			console.log("round: " + this.round)
+			document.querySelector(".selected").classList.remove("selected")
 			this.round++
 		}
 		else{

@@ -28,7 +28,9 @@
 			let targetSquare = event.target
 			let playerMoving = GAME_CONTROLLER.value.round % 2 == 0 ? "P2" : "P1"
 
-			GAME_CONTROLLER.value.tryAndMove(new Movement(selectedPiece, targetSquare, playerMoving))
+			if(selectedPiece){
+				GAME_CONTROLLER.value.tryAndMove(new Movement(selectedPiece, targetSquare, playerMoving))
+			}
 		}
 
 		document.querySelectorAll(".square").forEach(element => {
