@@ -96,6 +96,7 @@
 		height: 7.2vh;
 		align-self: center;
 		justify-self: center;
+		box-shadow: 0px 10px 10px rgba(51, 22, 8, 0.6);
 	}
 	.selected{
 		border: 0.4vh solid white !important;
@@ -105,12 +106,26 @@
 		height: 100%;
 		border-radius: 50%;
 		opacity: 1;
-		box-shadow: 0px 10px 10px rgba(51, 22, 8, 0.6);
 	}
 	#P2elephant, #P2lion, #P2tiger, #P2monkey, #P2bear, #P2pig, #P2cat, #P2rat{
 		border: 0.4vh solid rgb(212, 19, 93);
 	} 
 	#P1elephant, #P1lion, #P1tiger, #P1monkey, #P1bear, #P1pig, #P1cat, #P1rat{
 		border: 0.4vh solid rgb(250, 211, 85);
-	} 
+	}
+
+	@media (max-width: 678px){
+		.piece-div{
+			aspect-ratio: 1/1;
+			width: 10.7vw;
+			height: 10.7vw;
+		}
+
+		#P2elephant, #P2lion, #P2tiger, #P2monkey, #P2bear, #P2pig, #P2cat, #P2rat{
+			border: 0.6vw solid rgb(212, 19, 93);
+		} 
+		#P1elephant, #P1lion, #P1tiger, #P1monkey, #P1bear, #P1pig, #P1cat, #P1rat{
+			border: 0.6vw solid rgb(250, 211, 85);
+		}
+	}
 </style>

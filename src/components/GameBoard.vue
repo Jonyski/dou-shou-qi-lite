@@ -369,8 +369,22 @@
 	.normal{
 		background-color: rgba(255, 255, 255, 0.1);
 	}*/
-	.square:hover{
+	
+	/*.square:hover{
 		background-color: rgba(255, 255, 255, 0.3);
 		transition-duration: 0.2s;
+	}*/
+
+	@media (max-width: 678px) and (orientation: portrait){
+		#board{
+			height: 121.5vw;
+			width: 94.5vw;
+		}
+
+		.square{
+			aspect-ratio: 1/1;
+			height: 13.5vw;
+			width: 13.5vw;
+		}
 	}
 </style>
