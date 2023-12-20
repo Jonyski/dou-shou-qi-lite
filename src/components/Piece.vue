@@ -34,6 +34,7 @@
 
 		let pieceDropHandler = function(event){
 			event.preventDefault()
+
 			let draggedPieceId = event.dataTransfer.getData("text/plain")
 			let draggedPiece = document.getElementById(draggedPieceId)
 			let targetSquare = event.target.parentElement.parentElement
@@ -42,10 +43,39 @@
 			GAME_CONTROLLER.value.tryAndMove(new Movement(draggedPiece, targetSquare, playerMoving))
 		}
 
+		// i'm really sorry, this function is a mess (;-;)
+		let pieceClickHandler = function(event){
+			let playerMoving = GAME_CONTROLLER.value.round % 2 == 0 ? "P2" : "P1"
+			if(event.target.parentElement.id.startsWith(playerMoving)){
+				console.log("PIECE SELECTED")
+				let selectedEl;
+				try{
+					selectedEl = document.querySelector(".selected")
+					if(selectedEl == event.target.parentElement){
+						event.target.parentElement.classList.toggle("selected")
+					} else {
+						//if a piece is already selected we need to deselect it before selecting the new one
+						if(selectedEl){
+							selectedEl.classList.remove("selected")
+						}
+						event.target.parentElement.classList.add("selected")
+					}
+				} catch(e) {}
+
+			} else {
+				let selectedPiece = document.querySelector(".selected")
+				let targetSquare = event.target.parentElement.parentElement
+				let playerMoving = GAME_CONTROLLER.value.round % 2 == 0 ? "P2" : "P1"
+
+				GAME_CONTROLLER.value.tryAndMove(new Movement(selectedPiece, targetSquare, playerMoving))
+			}
+		}
+
 		let el = document.getElementById(`${owner.value + pieceTypeMap.get(pieceValue.value)}`)
 		el.addEventListener("dragstart", dragStartHandler)
 		el.addEventListener("drop", pieceDropHandler)
 		el.addEventListener("dragover", pieceDragOverHandler)
+		el.addEventListener("click", pieceClickHandler)
 	})
 
 </script>
@@ -64,6 +94,9 @@
 		height: 7.2vh;
 		align-self: center;
 		justify-self: center;
+	}
+	.selected{
+		border: 0.4vh solid white !important;
 	}
 	.piece-img{
 		width: 100%;

@@ -6,7 +6,6 @@
 	// const GAME_CONTROLLER = getCurrentInstance().appContext.config.globalProperties.$GAME_CONTROLLER
 
 	onMounted(function(){
-		debugger;
 		const GAME_CONTROLLER = getCurrentInstance().appContext.config.globalProperties.$GAME_CONTROLLER
 		GAME_CONTROLLER.value = new GameController()
 
@@ -24,9 +23,18 @@
 			GAME_CONTROLLER.value.tryAndMove(new Movement(draggedPiece, targetSquare, playerMoving))
 		}
 
+		let clickHandler = function(event){
+			let selectedPiece = document.querySelector(".selected")
+			let targetSquare = event.target
+			let playerMoving = GAME_CONTROLLER.value.round % 2 == 0 ? "P2" : "P1"
+
+			GAME_CONTROLLER.value.tryAndMove(new Movement(selectedPiece, targetSquare, playerMoving))
+		}
+
 		document.querySelectorAll(".square").forEach(element => {
 			element.addEventListener("dragover", dragOverHandler)
 			element.addEventListener("drop", onDropHandler)
+			element.addEventListener("click", clickHandler)
 		})
 	})
 </script>
